@@ -1,0 +1,89 @@
+A-O-A!
+
+We have already implemented BERT in step2 but In step3 we were trying to implement RoBERTa and more
+but shows incompatibility with numpy after a alot of my tries it didn't work.
+that's We implement "BAAI/bge-base-en-v1.5".
+
+error in RoBERTa
+
+/usr/local/lib/python3.11/dist-packages/huggingface_hub/utils/_auth.py:94: UserWarning: 
+The secret `HF_TOKEN` does not exist in your Colab secrets.
+To authenticate with the Hugging Face Hub, create a token in your settings tab (https://huggingface.co/settings/tokens), set it as secret in your Google Colab and restart your session.
+You will be able to reuse this secret in all of your notebooks.
+Please note that authentication is recommended but still optional to access public models or datasets.
+  warnings.warn(
+tokenizer_config.json: 100%
+ 25.0/25.0 [00:00<00:00, 2.19kB/s]
+vocab.json: 100%
+ 899k/899k [00:00<00:00, 10.8MB/s]
+merges.txt: 100%
+ 456k/456k [00:00<00:00, 34.2MB/s]
+tokenizer.json: 100%
+ 1.36M/1.36M [00:00<00:00, 44.2MB/s]
+config.json: 100%
+ 481/481 [00:00<00:00, 53.9kB/s]
+model.safetensors: 100%
+ 499M/499M [00:06<00:00, 53.8MB/s]
+Some weights of RobertaForSequenceClassification were not initialized from the model checkpoint at roberta-base and are newly initialized: ['classifier.dense.bias', 'classifier.dense.weight', 'classifier.out_proj.bias', 'classifier.out_proj.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Map: 100%
+ 3380/3380 [00:03<00:00, 1087.29 examples/s]
+Map: 100%
+ 845/845 [00:00<00:00, 1105.21 examples/s]
+wandb: WARNING The `run_name` is currently set to the same value as `TrainingArguments.output_dir`. If this was not intended, please specify a different run name by setting the `TrainingArguments.run_name` parameter.
+wandb: Logging into wandb.ai. (Learn how to deploy a W&B server locally: https://wandb.me/wandb-server)
+wandb: You can find your API key in your browser here: https://wandb.ai/authorize?ref=models
+wandb: Paste an API key from your profile and hit enter: ··········
+wandb: WARNING If you're specifying your api key in code, ensure this code is not shared publicly.
+wandb: WARNING Consider setting the WANDB_API_KEY environment variable, or running `wandb login` from the command line.
+wandb: No netrc file found, creating one.
+wandb: Appending key for api.wandb.ai to your netrc file: /root/.netrc
+wandb: Currently logged in as: as29624041 (as29624041-university-of-engineering-and-technology-taxila) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+Tracking run with wandb version 0.19.11
+Run data is saved locally in /content/wandb/run-20250514_165745-hnr9seek
+Syncing run ./results to Weights & Biases (docs)
+View project at https://wandb.ai/as29624041-university-of-engineering-and-technology-taxila/huggingface
+View run at https://wandb.ai/as29624041-university-of-engineering-and-technology-taxila/huggingface/runs/hnr9seek
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-4-c55b04b33bc5> in <cell line: 0>()
+     75 
+     76 # Start training
+---> 77 trainer.train()
+
+15 frames
+/usr/local/lib/python3.11/dist-packages/datasets/formatting/formatting.py in _arrow_array_to_numpy(self, pa_array)
+    194             ):
+    195                 return np.array(array, copy=False, dtype=object)
+--> 196         return np.array(array, copy=False)
+    197 
+    198 
+
+ValueError: Unable to avoid copy while creating an array as requested.
+If using `np.array(obj, copy=False)` replace it with `np.asarray(obj)` to allow a copy when needed (no behavior change in NumPy 1.x).
+For more details, see https://numpy.org/devdocs/numpy_2_0_migration_guide.html#adapting-to-changes-in-the-copy-keyword.
+
+----------
+Another Error
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+/usr/local/lib/python3.11/dist-packages/transformers/utils/import_utils.py in _get_module(self, module_name)
+   1966         try:
+-> 1967             return importlib.import_module("." + module_name, self.__name__)
+   1968         except Exception as e:
+
+32 frames
+AttributeError: module 'numpy' has no attribute 'dtypes'
+
+The above exception was the direct cause of the following exception:
+
+RuntimeError                              Traceback (most recent call last)
+/usr/local/lib/python3.11/dist-packages/transformers/utils/import_utils.py in _get_module(self, module_name)
+   1967             return importlib.import_module("." + module_name, self.__name__)
+   1968         except Exception as e:
+-> 1969             raise RuntimeError(
+   1970                 f"Failed to import {self.__name__}.{module_name} because of the following error (look up to see its"
+   1971                 f" traceback):\n{e}"
+
+RuntimeError: Failed to import transformers.models.roberta.modeling_roberta because of the following error (look up to see its traceback):
+module 'numpy' has no attribute 'dtypes'
